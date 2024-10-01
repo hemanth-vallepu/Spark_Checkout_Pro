@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Select Store</h1>
+  <button onclick="fetchStoreData('store1')">STORE 1</button>
+  <button onclick="fetchStoreData('store2')">STORE 2</button>
+  <button onclick="fetchStoreData('store3')">STORE 3</button>
+
+  <div id="store-data"></div>
+
+  <script>
+    const storeApiLinks = {
+      store1: 'https://gxedbf5e30.execute-api.us-east-1.amazonaws.com/prod',  // Replace with the actual API link for Store 1
+      store2: 'https://c7caj0jjdl.execute-api.us-east-1.amazonaws.com/prod',  // Replace with the actual API link for Store 2
+      store3: 'https://vzkcrdbyp4.execute-api.us-east-1.amazonaws.com/prod'   // Replace with the actual API link for Store 3
+    };
+
+    async function fetchStoreData(store) {
+      const apiUrl = storeApiLinks[store];
+      const storeDataDiv = document.getElementById('store-data');
+      storeDataDiv.innerHTML = 'Loading data...';
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        
+        const data = await response.json();
+        displayStoreData(data);
+      } catch (error) {
+        storeDataDiv.innerHTML = `Error fetching data: ${error.message}`;
+      }
+    }
+
+    function displayStoreData(data) {
+      const storeDataDiv = document.getElementById('store-data');
+      storeDataDiv.innerHTML = '<table border="1"><thead><tr><th>sno</th><th>Barcode</th><th>Product</th><th>Price</th><th>Timestamp</th><th>Weight</th></tr></thead><tbody></tbody></table>';
+      const tbody = storeDataDiv.querySelector('tbody');
+      
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${item.sno}</td><td>${item.Barcode}</td><td>${item.Product}</td><td>${item.Price}</td><td>${item.Timestamp}</td><td>${item.Weight}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>
