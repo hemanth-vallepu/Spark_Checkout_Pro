@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stakeholder Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 200px;
+    }
+    button {
+      padding: 10px 20px;
+    }
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Enter username">
+    <input type="password" id="password" placeholder="Enter password">
+    <button onclick="validateLogin()">Login</button>
+    <p id="error-message" class="error-message"></p>
+  </div>
+
+  <script>
+    const hardcodedUsername = 'admin'; // Replace with your desired username
+    const hardcodedPassword = '12345'; // Replace with your desired password
+
+    function validateLogin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('error-message');
+
+      if (username === hardcodedUsername && password === hardcodedPassword) {
+        window.location.href = 'inventory.html'; 
+      } else {
+        errorMessage.textContent = 'Incorrect username or password.';
+      }
+    }
+  </script>
+</body>
+</html>
